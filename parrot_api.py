@@ -1,3 +1,13 @@
+'''
+This module contains a little flask server that
+simply accepts POST and GET requests and logs the content
+to a log file.
+
+Used as a fake REST API to check whether asynchronous
+processes  properly notify their completion.
+
+'''
+
 from flask import Flask, request
 app = Flask(__name__)
 
