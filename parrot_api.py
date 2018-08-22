@@ -60,9 +60,20 @@ def catch_all(path):
         return 'Received and accepted POST from %s to %s' % (request.remote_addr, path)
 
     if request.method == 'GET':
-        msg =  "Get is not implemented... (request to path %s)." % path
-        LOGGER.info(msg)
-        return msg
+
+        LOGGER.info('(1) Received get from "%s"', request.remote_addr)
+
+        params_content = []
+        for k,v in request.args.items():
+            params_content.append('%s=%s' % (k, v))
+        if len(params_content) == 0:
+            params_content = None
+        else:
+            params_content = '; '.join(params_content)
+        LOGGER.info('(2) Contains param content: %s', params_content)
+
+        return 'Received and accepted GET from %s to %s' % (request.remote_addr, path)
+
 
 
 if __name__ == '__main__':
