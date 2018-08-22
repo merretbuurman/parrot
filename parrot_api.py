@@ -1,6 +1,17 @@
 from flask import Flask, request
 app = Flask(__name__)
 
+
+# Create log dir
+import os
+try:
+    os.mkdir('logs')
+except OSError as e:
+    if 'File exists:' in str(e):
+        pass
+    else:
+        raise e
+
 import sys
 import logging
 root = logging.getLogger()
@@ -10,7 +21,7 @@ this_one.setLevel(logging.INFO)
 ha = logging.StreamHandler(sys.stdout)
 ha.setFormatter(logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s'))
 root.addHandler(ha)
-fh = logging.FileHandler('log.txt', mode='w')
+fh = logging.FileHandler('logs/log.txt', mode='w')
 fh.setFormatter(logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s'))
 root.addHandler(fh)
 
