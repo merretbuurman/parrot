@@ -7,5 +7,6 @@ CMD ["parrot_api.py"]
 
 # TODO: Not run as root!
 
-# docker build -t flask-sample-one:20180822 .
-# docker run --rm  --name flask_fake_import_manager -d -p 5000:5000 -v /home/.../flasklogs:/app/logs flask-sample-one:20180822
+# docker build -t flask-parrot:20180822 .
+# docker run --rm  --name parrot -d -p 5000:5000 -v /home/.../flasklogs:/app/logs flask-parrot:20180822
+
