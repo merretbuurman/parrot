@@ -26,8 +26,19 @@ root.addHandler(fh)
 LOGGER = logging.getLogger(__name__)
 LOGGER.setLevel(logging.INFO)
 
-# Usage on localhost:
-# curl localhost:5000/what/ever/ -X POST -H "Content-Type: application/json" --data '{"foo":"xyz","bar":"xyz"}'
+'''
+Usage on localhost:
+
+POST with JSON content:
+curl -v -X POST -H "Content-Type: application/json" --data '{"foo":"xyz","bar":"xyz"}' localhost:5000/what/ever/
+
+POST with form content:
+curl -v -X POST localhost:5000/what/ever/ --data foo=xyz --data bar=xyz
+
+GET with params:
+curl -v -X GET  localhost:5000/what/ever?foo=xyz&bar=xyz 
+curl -v -G --data "foo=xyz&bar=xyz" localhost:5000/what/ever
+'''
 
 
 # Catch all

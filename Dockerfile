@@ -9,6 +9,3 @@ CMD ["parrot_api.py"]
 
 # docker build -t flask-sample-one:20180822 .
 # docker run --rm  --name flask_fake_import_manager -d -p 5000:5000 -v /home/.../flasklogs:/app/logs flask-sample-one:20180822
-
-# Test using curl:
-#curl -X POST localhost:5000/foo/bar --data "param1=value1&param2=value2"
