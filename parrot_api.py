@@ -53,10 +53,11 @@ def catch_all(path):
             form_content = ('%s, %s=%s' % (form_content, k, v))
         LOGGER.info('(3) Contains form content: %s', form_content)
 
-        return 'all righty'
+        # Response:
+        return 'Received and accepted POST from %s to %s' % (request.remote_addr, path)
 
     if request.method == 'GET':
-        msg =  "Get is not implemented..."
+        msg =  "Get is not implemented... (request to path %s)." % path
         LOGGER.info(msg)
         return msg
 
