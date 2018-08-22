@@ -72,9 +72,8 @@ curl -v -X GET  localhost:5000/what/ever?foo=xyz&bar=xyz
 curl -v -G --data "foo=xyz&bar=xyz" localhost:5000/what/ever
 ```
 
-The contents of these calls should now be visible in the bind-mounted log file:
-
-`vi .../app/flasklogs/log.txt`
+The contents of these calls should now be visible in the
+bind-mounted log file: `vi /path/to/app/flasklogs/log.txt`
 
 ```
 2018-08-22 12:48:19,544 - __main__ - INFO - (0) Got path "what/ever/"
