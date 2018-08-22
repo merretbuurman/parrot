@@ -12,20 +12,19 @@ except OSError as e:
     else:
         raise e
 
+# Configure logging to console and to log file
 import sys
 import logging
 root = logging.getLogger()
-root.setLevel(logging.INFO)
-this_one = logging.getLogger('parrot_api')
-this_one.setLevel(logging.INFO)
+root.setLevel(logging.WARN) # TODO: does not work...
 ha = logging.StreamHandler(sys.stdout)
 ha.setFormatter(logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s'))
 root.addHandler(ha)
 fh = logging.FileHandler('logs/log.txt', mode='w')
 fh.setFormatter(logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s'))
 root.addHandler(fh)
-
 LOGGER = logging.getLogger(__name__)
+LOGGER.setLevel(logging.INFO)
 
 # Usage on localhost:
 # curl localhost:5000/what/ever/ -X POST -H "Content-Type: application/json" --data '{"foo":"xyz","bar":"xyz"}'
