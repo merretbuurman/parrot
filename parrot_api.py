@@ -48,9 +48,13 @@ def catch_all(path):
         LOGGER.info('(2) Contains JSON content: %s', json_content)
 
         # form
-        form_content = ''
-        for k,v in request.form:
-            form_content = ('%s, %s=%s' % (form_content, k, v))
+        form_content = []
+        for k,v in request.form.items():
+            form_content.append('%s=%s' % (k, v))
+        if len(form_content) == 0:
+            form_content = None
+        else:
+            form_content = '; '.join(form_content)
         LOGGER.info('(3) Contains form content: %s', form_content)
 
         # Response:
