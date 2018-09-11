@@ -11,6 +11,9 @@ processes  properly notify their completion.
 from flask import Flask, request
 app = Flask(__name__)
 
+import kaninchen
+import json
+
 
 # Create log dir
 import os
@@ -51,6 +54,25 @@ curl -v -G --data "foo=xyz&bar=xyz" localhost:5000/what/ever
 '''
 
 
+# Create a Rabbit Connection
+from kaninchen import RabbitWrapper
+params = {
+    "rabbit_host": "sdc-b2host-test.dkrz.de",
+    "rabbit_virtual_host": "elkstack_tests",
+    "rabbit_user": "elkfeeder_test",
+    "rabbit_password": "elkslikecarrotstoo",
+    "rabbit_exchange_name": "eudat_qc",
+    "rabbit_routing_key": "librarytest",
+    "app_name": "foobar",
+    "rabbit_enable_ssl": False
+}
+
+print('PARAMS PARROT: %s' % params)
+RABBIT_WRAPPER = RabbitWrapper(**params)
+RABBIT_WRAPPER.send_message('TEST ON FLASK IMPORT')
+
+
+
 # Catch all
 # https://stackoverflow.com/questions/45777770/catch-all-routes-for-flask#45777812
 # http://flask.pocoo.org/snippets/57/
@@ -77,6 +99,16 @@ def catch_all(path):
             form_content = '; '.join(form_content)
         LOGGER.info('(3) Contains form content: %s', form_content)
 
+        # Write log to RabbitMQ
+        rabbitlog = dict(
+            path=path,
+            from_ip=request.remote_addr,
+            method='POST',
+            json=json_content,
+            form_content=form_content
+        )
+        RABBIT_WRAPPER.send_message(json.dumps(rabbitlog))
+
         # Response:
         return 'Received and accepted POST from %s to %s' % (request.remote_addr, path)
 
@@ -93,6 +125,16 @@ def catch_all(path):
             params_content = '; '.join(params_content)
         LOGGER.info('(2) Contains param content: %s', params_content)
 
+        # Write log to RabbitMQ
+        rabbitlog = dict(
+            path=path,
+            from_ip=request.remote_addr,
+            method='GET',
+            params=params_content,
+        )
+        RABBIT_WRAPPER.send_message(json.dumps(rabbitlog))
+
+        # Response
         return 'Received and accepted GET from %s to %s' % (request.remote_addr, path)
 
 
