@@ -64,13 +64,13 @@ params = {
     "rabbit_exchange_name": "eudat_qc",
     "rabbit_routing_key": "librarytest",
     "app_name": "foobar",
-    "rabbit_enable_ssl": False
+    "rabbit_enable_ssl": False,
+    "rabbit_message_headers": dict(app_name='PARROT')
 }
 
 print('PARAMS PARROT: %s' % params)
 RABBIT_WRAPPER = RabbitWrapper(**params)
 RABBIT_WRAPPER.send_message('TEST ON FLASK IMPORT')
-
 
 
 # Catch all

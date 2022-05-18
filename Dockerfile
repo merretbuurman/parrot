@@ -2,6 +2,12 @@ FROM python:2.7.15-alpine3.8
 COPY . /app
 WORKDIR /app
 RUN pip install -r requirements.txt
+
+COPY ./kaninchen /kaninchen
+WORKDIR /kaninchen
+RUN python setup.py install
+
+workdir /app
 ENTRYPOINT ["python"]
 CMD ["parrot_api.py"]
 
